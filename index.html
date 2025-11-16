@@ -5,38 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tic-Tac-Toe Game</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="msg-container hide">
-      <p id="msg">Winner</p>
-      <button id="new-btn">New Game</button>
+      <div class="msg-content">
+        <p id="msg">Winner</p>
+        <button id="new-btn" class="btn-primary">Next Round</button>
+        <button id="restart-btn" class="btn-secondary">Restart Match</button>
+      </div>
+    </div>
+    
+    <div class="match-winner-container hide">
+      <div class="msg-content">
+        <p id="match-winner-msg">Match Winner!</p>
+        <button id="new-match-btn" class="btn-primary">New Match</button>
+      </div>
     </div>
     <main>
-      <h1>Tic Tac Toe</h1>
-      <div class="container">
-        <div class="game">
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
+      <header>
+        <h1 class="game-title">
+          <span class="title-icon">⭕</span>
+          Tic Tac Toe
+          <span class="title-icon">❌</span>
+        </h1>
+        <p class="game-subtitle">Classic Two-Player Game</p>
+      </header>
+      
+      <div class="player-section">
+        <div class="player-inputs">
+          <div class="input-group">
+            <label for="playerO">Player 1 (O)</label>
+            <input type="text" id="playerO" placeholder="Enter Player 1 Name" required />
+          </div>
+          <div class="input-group">
+            <label for="playerX">Player 2 (X)</label>
+            <input type="text" id="playerX" placeholder="Enter Player 2 Name" required />
+          </div>
+          <div class="input-group">
+            <label for="targetScore">Target Score</label>
+            <input type="number" id="targetScore" placeholder="e.g., 3" min="1" value="3" required />
+          </div>
+        </div>
+        <button id="start-btn" class="btn-start">Start Game</button>
+        <p id="validation-msg" class="validation-msg hide"></p>
+      </div>
+
+      <div class="game-wrapper">
+        <!-- Left Side: Score & Details Panel -->
+        <div class="left-panel">
+          <div class="panel-header">
+            <h2>Game Details</h2>
+          </div>
+          
+          <div class="players-section">
+            <div class="player-card player-o-card" id="playerOCard">
+              <div class="player-header">
+                <div class="player-symbol-large">O</div>
+                <div class="player-info">
+                  <div class="player-name" id="playerONameDisplay">Player 1</div>
+                  <div class="player-label">Player 1</div>
+                </div>
+              </div>
+              <div class="score-section">
+                <div class="score-label">Score</div>
+                <div class="player-score-large" id="scoreO">0</div>
+                <div class="score-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progressO" style="width: 0%"></div>
+                  </div>
+                  <div class="target-info">Target: <span id="targetDisplay">3</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vs-section">
+              <div class="vs-divider-large">VS</div>
+              <div class="turn-indicator" id="turnIndicator">
+                <span class="turn-label">Current Turn:</span>
+                <span class="turn-player" id="turnPlayer">O</span>
+              </div>
+            </div>
+
+            <div class="player-card player-x-card" id="playerXCard">
+              <div class="player-header">
+                <div class="player-symbol-large">X</div>
+                <div class="player-info">
+                  <div class="player-name" id="playerXNameDisplay">Player 2</div>
+                  <div class="player-label">Player 2</div>
+                </div>
+              </div>
+              <div class="score-section">
+                <div class="score-label">Score</div>
+                <div class="player-score-large" id="scoreX">0</div>
+                <div class="score-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progressX" style="width: 0%"></div>
+                  </div>
+                  <div class="target-info">Target: <span id="targetDisplayX">3</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls-panel">
+            <button id="reset-btn" class="btn-control">Reset Round</button>
+            <div class="match-info">
+              <div class="info-item">
+                <span class="info-label">Target Score:</span>
+                <span class="info-value" id="targetScoreDisplay">3</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Rounds Played:</span>
+                <span class="info-value" id="roundsPlayed">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Game Board -->
+        <div class="right-panel">
+          <div class="game-board-container">
+            <div class="board-header">
+              <h3>Game Board</h3>
+            </div>
+            <div class="game">
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+              <button class="box"></button>
+            </div>
+          </div>
         </div>
       </div>
-      <button id="reset-btn">Reset Game</button>
     </main>
     <script src="app.js"></script>
-    <script>
-        const nameContainer = document.createElement("div");
-        nameContainer.style.margin = "1rem";
-        nameContainer.innerHTML = `
-          <input type="text" id="playerO" placeholder="Enter Player 1 Name (O)" style="padding:0.5rem; margin-right:1rem;" />
-          <input type="text" id="playerX" placeholder="Enter Player 2 Name (X)" style="padding:0.5rem;" />
-        `;
-        document.body.insertBefore(nameContainer, document.querySelector("main"));
-      </script>
   </body>
 </html>
